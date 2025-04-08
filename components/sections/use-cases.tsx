@@ -1,7 +1,7 @@
-import Image from "next/image"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, HeadphonesIcon, Users, Search } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowRight, HeadphonesIcon, Users, Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function UseCases() {
   const cases = [
@@ -41,24 +41,37 @@ export function UseCases() {
       ],
       image: "/placeholder.svg?height=300&width=400",
     },
-  ]
+  ];
 
   return (
     <section id="use-cases" className="w-full py-12 md:py-24 bg-slate-50">
       <div className="container px-4 md:px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Real-World RAG Success Stories</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+            Real-World RAG Success Stories
+          </h2>
           <p className="mt-4 text-gray-500 md:text-xl max-w-3xl mx-auto">
-            See how our RAG consulting services have transformed businesses across industries
+            See how our RAG consulting services have transformed businesses
+            across industries
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {cases.map((case_, index) => (
-            <Card key={index} className="border-none shadow-md overflow-hidden flex flex-col">
+            <Card
+              key={index}
+              className="border-none shadow-md overflow-hidden flex flex-col"
+            >
               <div className="relative h-48 w-full">
-                <Image src={case_.image || "/placeholder.svg"} alt={case_.title} fill className="object-cover" />
-                <div className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md">{case_.icon}</div>
+                <Image
+                  src={case_.image || "/placeholder.svg"}
+                  alt={case_.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md">
+                  {case_.icon}
+                </div>
               </div>
               <CardHeader>
                 <CardTitle className="text-xl">{case_.title}</CardTitle>
@@ -68,14 +81,19 @@ export function UseCases() {
                 <div className="grid grid-cols-3 gap-2 mb-6">
                   {case_.stats.map((stat, statIndex) => (
                     <div key={statIndex} className="text-center">
-                      <p className="text-2xl font-bold text-cyan-600">{stat.value}</p>
+                      <p className="text-2xl font-bold text-cyan-600">
+                        {stat.value}
+                      </p>
                       <p className="text-xs text-gray-500">{stat.label}</p>
                     </div>
                   ))}
                 </div>
               </CardContent>
               <div className="p-6 pt-0 mt-auto">
-                <Button variant="ghost" className="w-full justify-between group">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-between group"
+                >
                   View Case Study
                   <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
                 </Button>
@@ -85,6 +103,5 @@ export function UseCases() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Star } from "lucide-react"
-import Image from "next/image"
+import { Card, CardContent } from "@/components/ui/card";
+import { Star } from "lucide-react";
+import Image from "next/image";
 
 export function Testimonials() {
   const testimonials = [
@@ -28,15 +28,18 @@ export function Testimonials() {
       avatar: "/placeholder.svg?height=80&width=80",
       stars: 5,
     },
-  ]
+  ];
 
   return (
     <section id="testimonials" className="w-full py-12 md:py-24 bg-slate-50">
       <div className="container px-4 md:px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">What Our Clients Say</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+            What Our Clients Say
+          </h2>
           <p className="mt-4 text-gray-500 md:text-xl max-w-3xl mx-auto">
-            Hear from organizations that have transformed their AI capabilities with our RAG consulting
+            Hear from organizations that have transformed their AI capabilities
+            with our RAG consulting
           </p>
         </div>
 
@@ -46,10 +49,15 @@ export function Testimonials() {
               <CardContent className="p-6">
                 <div className="flex mb-4">
                   {[...Array(testimonial.stars)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    <Star
+                      key={i}
+                      className="h-5 w-5 fill-yellow-400 text-yellow-400"
+                    />
                   ))}
                 </div>
-                <blockquote className="text-gray-500 mb-6">"{testimonial.quote}"</blockquote>
+                <blockquote className="text-gray-500 mb-6">
+                  "{testimonial.quote}"
+                </blockquote>
                 <div className="flex items-center">
                   <div className="relative h-12 w-12 rounded-full overflow-hidden mr-4">
                     <Image
@@ -70,6 +78,5 @@ export function Testimonials() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
