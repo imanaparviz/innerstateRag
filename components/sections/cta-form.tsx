@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { submitLeadForm } from "@/lib/actions"
-import { Loader2 } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { submitLeadForm } from "@/lib/actions";
+import { Loader2 } from "lucide-react";
 
 export function CtaForm() {
   const [formData, setFormData] = useState({
@@ -19,35 +25,39 @@ export function CtaForm() {
     phone: "",
     companySize: "",
     message: "",
-  })
+  });
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-  const [error, setError] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSelectChange = (value: string) => {
-    setFormData((prev) => ({ ...prev, companySize: value }))
-  }
+    setFormData((prev) => ({ ...prev, companySize: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setError("")
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
 
     try {
-      const result = await submitLeadForm(formData)
+      const result = await submitLeadForm(formData);
 
       // Check if this was a simulated submission (for development/preview)
       if (result.simulated) {
-        console.info("This was a simulated form submission as Supabase credentials are not available.")
+        console.info(
+          "This was a simulated form submission as Supabase credentials are not available."
+        );
       }
 
-      setIsSuccess(true)
+      setIsSuccess(true);
       setFormData({
         name: "",
         email: "",
@@ -55,14 +65,14 @@ export function CtaForm() {
         phone: "",
         companySize: "",
         message: "",
-      })
+      });
     } catch (err) {
-      setError("There was an error submitting your request. Please try again.")
-      console.error(err)
+      setError("There was an error submitting your request. Please try again.");
+      console.error(err);
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   if (isSuccess) {
     return (
@@ -86,7 +96,8 @@ export function CtaForm() {
         </div>
         <h3 className="text-xl font-bold text-gray-900 mb-2">Thank You!</h3>
         <p className="text-gray-600 mb-4">
-          We've received your request and will contact you shortly to schedule your consultation.
+          We've received your request and will contact you shortly to schedule
+          your consultation.
         </p>
         <Button
           variant="outline"
@@ -96,12 +107,16 @@ export function CtaForm() {
           Submit Another Request
         </Button>
       </div>
-    )
+    );
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm">{error}</div>}
+      {error && (
+        <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm">
+          {error}
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
@@ -115,7 +130,7 @@ export function CtaForm() {
             onChange={handleChange}
             placeholder="John Smith"
             required
-            className="border-gray-300"
+            className="border-gray-300 text-gray-900 dark:text-gray-100"
           />
         </div>
 
@@ -131,7 +146,7 @@ export function CtaForm() {
             onChange={handleChange}
             placeholder="john@company.com"
             required
-            className="border-gray-300"
+            className="border-gray-300 text-gray-900 dark:text-gray-100"
           />
         </div>
       </div>
@@ -148,7 +163,7 @@ export function CtaForm() {
             onChange={handleChange}
             placeholder="Acme Inc."
             required
-            className="border-gray-300"
+            className="border-gray-300 text-gray-900 dark:text-gray-100"
           />
         </div>
 
@@ -162,7 +177,7 @@ export function CtaForm() {
             value={formData.phone}
             onChange={handleChange}
             placeholder="+1 (555) 123-4567"
-            className="border-gray-300"
+            className="border-gray-300 text-gray-900 dark:text-gray-100"
           />
         </div>
       </div>
@@ -196,7 +211,7 @@ export function CtaForm() {
           onChange={handleChange}
           placeholder="Tell us about your RAG implementation needs..."
           rows={4}
-          className="border-gray-300"
+          className="border-gray-300 text-gray-900 dark:text-gray-100"
         />
       </div>
 
@@ -216,9 +231,9 @@ export function CtaForm() {
       </Button>
 
       <p className="text-xs text-gray-500 text-center">
-        By submitting this form, you agree to our privacy policy and terms of service.
+        By submitting this form, you agree to our privacy policy and terms of
+        service.
       </p>
     </form>
-  )
+  );
 }
-
