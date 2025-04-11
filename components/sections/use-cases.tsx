@@ -47,7 +47,7 @@ export function UseCases() {
     <section id="use-cases" className="w-full py-12 md:py-24 bg-slate-50">
       <div className="container px-4 md:px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-gray-900">
             Real-World RAG Success Stories
           </h2>
           <p className="mt-4 text-gray-500 md:text-xl max-w-3xl mx-auto">

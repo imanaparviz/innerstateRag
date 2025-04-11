@@ -1,44 +1,63 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
 
 export function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 10) {
-        setScrolled(true)
+        setScrolled(true);
       } else {
-        setScrolled(false)
+        setScrolled(false);
       }
-    }
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      const footer = document.getElementById("site-footer");
+      if (footer) {
+        const footerRect = footer.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        if (footerRect.top < windowHeight / 2) {
+          setIsNavbarVisible(false);
+        } else {
+          setIsNavbarVisible(true);
+        }
+      } else {
+        setIsNavbarVisible(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+      className={`fixed top-0 z-50 w-full transition-all duration-300 transform ${
         scrolled
           ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40"
           : "bg-transparent"
-      }`}
+      } ${isNavbarVisible ? "translate-y-0" : "-translate-y-full"}`}
     >
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center">
             <span
-              className={`text-xl font-bold ${scrolled ? "bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent" : "text-white"}`}
+              className={`text-xl font-bold ${
+                scrolled
+                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent"
+                  : "text-white"
+              }`}
             >
               RAG Consulting
             </span>
@@ -49,36 +68,68 @@ export function Navbar() {
         <nav className="hidden md:flex items-center gap-6">
           <Link
             href="#why-us"
-            className={`text-sm font-medium ${scrolled ? "hover:text-cyan-600" : "text-white hover:text-cyan-300"} transition-colors`}
+            className={`text-sm font-medium ${
+              scrolled
+                ? "hover:text-cyan-600"
+                : "text-white hover:text-cyan-300"
+            } transition-colors`}
           >
             Why Choose Us
           </Link>
           <Link
             href="#use-cases"
-            className={`text-sm font-medium ${scrolled ? "hover:text-cyan-600" : "text-white hover:text-cyan-300"} transition-colors`}
+            className={`text-sm font-medium ${
+              scrolled
+                ? "hover:text-cyan-600"
+                : "text-white hover:text-cyan-300"
+            } transition-colors`}
           >
             Use Cases
           </Link>
           <Link
             href="#process"
-            className={`text-sm font-medium ${scrolled ? "hover:text-cyan-600" : "text-white hover:text-cyan-300"} transition-colors`}
+            className={`text-sm font-medium ${
+              scrolled
+                ? "hover:text-cyan-600"
+                : "text-white hover:text-cyan-300"
+            } transition-colors`}
           >
             Our Process
           </Link>
           <Link
+            href="/blog"
+            className={`text-sm font-medium ${
+              scrolled
+                ? "hover:text-cyan-600"
+                : "text-white hover:text-cyan-300"
+            } transition-colors`}
+          >
+            Blog
+          </Link>
+          <Link
             href="#testimonials"
-            className={`text-sm font-medium ${scrolled ? "hover:text-cyan-600" : "text-white hover:text-cyan-300"} transition-colors`}
+            className={`text-sm font-medium ${
+              scrolled
+                ? "hover:text-cyan-600"
+                : "text-white hover:text-cyan-300"
+            } transition-colors`}
           >
             Testimonials
           </Link>
-          <Button asChild variant="default" className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white">
+          <Button
+            asChild
+            variant="default"
+            className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white"
+          >
             <Link href="#contact">Contact Us</Link>
           </Button>
         </nav>
 
         {/* Mobile Menu Button */}
         <button
-          className={`md:hidden p-2 rounded-md ${scrolled ? "hover:bg-gray-100" : "text-white hover:bg-white/10"}`}
+          className={`md:hidden p-2 rounded-md ${
+            scrolled ? "hover:bg-gray-100" : "text-white hover:bg-white/10"
+          }`}
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
@@ -112,6 +163,13 @@ export function Navbar() {
               Our Process
             </Link>
             <Link
+              href="/blog"
+              className="text-sm font-medium hover:text-cyan-600 transition-colors"
+              onClick={toggleMenu}
+            >
+              Blog
+            </Link>
+            <Link
               href="#testimonials"
               className="text-sm font-medium hover:text-cyan-600 transition-colors"
               onClick={toggleMenu}
@@ -130,6 +188,5 @@ export function Navbar() {
         </div>
       )}
     </header>
-  )
+  );
 }
-

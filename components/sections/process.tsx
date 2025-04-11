@@ -1,5 +1,13 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { CalendarCheck, FileText, Database, Settings, Server, Users } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  CalendarCheck,
+  FileText,
+  Database,
+  Settings,
+  Server,
+  Users,
+} from "lucide-react";
+import Link from "next/link";
 
 export function Process() {
   const steps = [
@@ -14,17 +22,22 @@ export function Process() {
       title: "Strategy & Architecture",
       description:
         "Our team designs a custom RAG architecture tailored to your specific business needs and technical environment.",
+      linkText: "Learn about RAG basics",
+      linkHref: "/blog/what-is-rag",
     },
     {
       icon: <Database className="h-10 w-10 text-white" />,
       title: "Data Preparation",
       description:
         "We prepare your data for RAG implementation, including chunking, embedding, and vector database setup.",
+      linkText: "Explore RAG techniques",
+      linkHref: "/learning",
     },
     {
       icon: <Settings className="h-10 w-10 text-white" />,
       title: "RAG Implementation",
-      description: "Our engineers build and integrate the RAG system with your existing infrastructure and AI models.",
+      description:
+        "Our engineers build and integrate the RAG system with your existing infrastructure and AI models.",
     },
     {
       icon: <Server className="h-10 w-10 text-white" />,
@@ -38,15 +51,18 @@ export function Process() {
       description:
         "We provide comprehensive training and documentation to ensure your team can maintain and evolve the RAG system.",
     },
-  ]
+  ];
 
   return (
     <section id="process" className="w-full py-12 md:py-24 bg-white">
       <div className="container px-4 md:px-6">
         <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Our RAG Implementation Process</h2>
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-gray-900">
+            Our RAG Implementation Process
+          </h2>
           <p className="mt-4 text-gray-500 md:text-xl max-w-3xl mx-auto">
-            A proven methodology for successful Retrieval Augmented Generation implementation
+            A proven methodology for successful Retrieval Augmented Generation
+            implementation
           </p>
         </div>
 
@@ -57,12 +73,32 @@ export function Process() {
           <div className="space-y-12">
             {steps.map((step, index) => (
               <div key={index} className="relative">
-                <div className={`md:flex items-center ${index % 2 === 0 ? "" : "flex-row-reverse"}`}>
+                <div
+                  className={`md:flex items-center ${
+                    index % 2 === 0 ? "" : "flex-row-reverse"
+                  }`}
+                >
                   <div className="md:w-1/2 p-4">
-                    <Card className={`border-none shadow-md ${index % 2 === 0 ? "md:mr-8" : "md:ml-8"}`}>
-                      <CardContent className="p-6">
+                    <Card
+                      className={`border-none shadow-md ${
+                        index % 2 === 0 ? "md:mr-8" : "md:ml-8"
+                      }`}
+                    >
+                      <CardContent className="p-6 flex flex-col h-full">
                         <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                        <p className="text-gray-500">{step.description}</p>
+                        <p className="text-gray-500 flex-grow">
+                          {step.description}
+                        </p>
+                        {step.linkHref && step.linkText && (
+                          <p className="mt-3">
+                            <Link
+                              href={step.linkHref}
+                              className="text-blue-600 hover:underline text-sm font-medium"
+                            >
+                              {step.linkText} &rarr;
+                            </Link>
+                          </p>
+                        )}
                       </CardContent>
                     </Card>
                   </div>
@@ -92,6 +128,5 @@ export function Process() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

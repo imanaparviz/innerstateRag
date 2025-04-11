@@ -8,6 +8,7 @@ import { Testimonials } from "@/components/sections/testimonials";
 import { CtaSection } from "@/components/sections/cta-section";
 import Footer from "@/components/footer";
 import { MarketStats } from "@/components/sections/market-stats";
+import { FaqSection } from "@/components/sections/faq";
 
 export const metadata: Metadata = {
   title: "RAG Consulting Services | Reduce AI Hallucinations",
@@ -65,6 +66,7 @@ export default function Home() {
         <UseCases />
         <Process />
         <Testimonials />
+        <FaqSection />
         <CtaSection />
         <Footer />
       </main>

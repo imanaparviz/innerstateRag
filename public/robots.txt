@@ -1,0 +1,10 @@
+# Allow all user agents to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow specific paths if needed in the future, e.g.:
+# Disallow: /admin
+# Disallow: /private
+
+# Point to the Sitemap
+Sitemap: https://innerstaterag.com/sitemap.xml 

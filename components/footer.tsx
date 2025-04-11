@@ -3,51 +3,41 @@ import Link from "next/link";
 // Navigation-Links in drei Spalten wie im Luma-Footer
 const footerLinks = [
   {
-    title: "Produktangebot",
+    title: "Features",
     links: [
-      { label: "Dream Machine", href: "/dream-machine" },
-      { label: "Legacy Dream Machine", href: "/legacy" },
-      { label: "Photon", href: "/photon" },
       { label: "API", href: "/api" },
-      { label: "Pricing", href: "/pricing" },
-      { label: "Genie", href: "/genie" },
-      { label: "Capture", href: "/capture" },
+      { label: "Pricing", href: "#contact" },
     ],
   },
   {
     title: "Community",
     links: [
-      { label: "Join Us", href: "/join-us" },
+      { label: "Join Us", href: "#contact" },
       { label: "Learning Hub", href: "/learning" },
-      { label: "Inner Circle", href: "/inner-circle" },
-      { label: "Discord", href: "/discord" },
-      { label: "Twitter", href: "/twitter" },
-      { label: "Media Kit", href: "/media-kit" },
     ],
   },
   {
-    title: "Rechtliches",
+    title: "Legal",
     links: [
-      { label: "Contact Us", href: "/contact" },
-      { label: "Terms of Service", href: "/terms" },
+      { label: "Contact Us", href: "#contact" },
+      { label: "Our Team", href: "/teams" },
       { label: "Privacy Policy", href: "/privacy" },
     ],
   },
 ];
 
 // Navigationslinks für die obere Leiste
-const topNavLinks = [
-  { label: "Join Us", href: "/join-us" },
-  { label: "Photon", href: "/photon" },
-  { label: "Ray2", href: "/ray2" },
-];
+const topNavLinks = [{ label: "Join Us", href: "#contact" }];
 
 const Footer = () => {
   // Holt das aktuelle Jahr für das Copyright
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative w-full h-screen overflow-hidden bg-black">
+    <footer
+      id="site-footer"
+      className="relative w-full h-screen overflow-hidden bg-black"
+    >
       {/* Hintergrund-Container mit schwarzem Hintergrund */}
       <div className="absolute inset-0 w-full h-full bg-black"></div>
 
@@ -140,7 +130,7 @@ const Footer = () => {
 
             {/* Try Now Button */}
             <Link
-              href="/try-now"
+              href="#contact"
               className="bg-gray-200 hover:bg-white text-black py-4 px-12 rounded-full text-lg font-medium transition-colors whitespace-nowrap min-w-[180px] text-center"
             >
               Try Now
@@ -223,7 +213,7 @@ const Footer = () => {
 
         {/* Copyright-Hinweis */}
         <div className="mt-auto pt-8 text-sm text-gray-400">
-          &copy; {currentYear} Dein Firmenname. Alle Rechte vorbehalten.
+          &copy; {currentYear} Your Company Name. All rights reserved.
         </div>
       </div>
     </footer>
