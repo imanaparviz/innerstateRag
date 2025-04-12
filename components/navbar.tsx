@@ -3,12 +3,26 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Languages } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+// Supported locales from configuration
+import { locales } from "@/i18n"; // Assuming i18n.ts exports locales
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+
+  const pathname = usePathname(); // Get current path without locale
+  const locale = useLocale(); // Get current locale
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,6 +55,17 @@ export function Navbar() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Function to get the path without the locale prefix
+  const getPathWithoutLocale = (path: string, currentLocale: string) => {
+    const segments = path.split("/");
+    if (segments.length > 1 && locales.includes(segments[1])) {
+      return segments.slice(2).join("/") || "/"; // Return base path or root
+    }
+    return path; // Path doesn't start with a known locale prefix
+  };
+
+  const pathWithoutLocale = getPathWithoutLocale(pathname, locale);
+
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-all duration-300 transform ${
@@ -51,7 +76,8 @@ export function Navbar() {
     >
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center">
+          {/* Logo Link - always points to root for the current locale */}
+          <Link href={`/${locale}`} className="flex items-center">
             <span
               className={`text-xl font-bold ${
                 scrolled
@@ -65,122 +91,194 @@ export function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Link
-            href="#why-us"
-            className={`text-sm font-medium ${
-              scrolled
-                ? "hover:text-cyan-600"
-                : "text-white hover:text-cyan-300"
-            } transition-colors`}
-          >
-            Why Choose Us
-          </Link>
-          <Link
-            href="#use-cases"
-            className={`text-sm font-medium ${
-              scrolled
-                ? "hover:text-cyan-600"
-                : "text-white hover:text-cyan-300"
-            } transition-colors`}
-          >
-            Use Cases
-          </Link>
-          <Link
-            href="#process"
-            className={`text-sm font-medium ${
-              scrolled
-                ? "hover:text-cyan-600"
-                : "text-white hover:text-cyan-300"
-            } transition-colors`}
-          >
-            Our Process
-          </Link>
-          <Link
-            href="/blog"
-            className={`text-sm font-medium ${
-              scrolled
-                ? "hover:text-cyan-600"
-                : "text-white hover:text-cyan-300"
-            } transition-colors`}
-          >
-            Blog
-          </Link>
-          <Link
-            href="#testimonials"
-            className={`text-sm font-medium ${
-              scrolled
-                ? "hover:text-cyan-600"
-                : "text-white hover:text-cyan-300"
-            } transition-colors`}
-          >
-            Testimonials
-          </Link>
+        <nav className="hidden md:flex items-center gap-4">
+          <ul className="flex space-x-6">
+            <li>
+              <Link
+                href={`/${locale}/`}
+                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`/${locale}/inner-state-rag`}
+                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+              >
+                Inner State RAG
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`/${locale}/inner-state`}
+                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+              >
+                Inner State
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`/${locale}/rag`}
+                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+              >
+                RAG
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`/${locale}/rag-glossary`}
+                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+              >
+                RAG Glossary
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`/${locale}/blog`}
+                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+              >
+                Blog
+              </Link>
+            </li>
+          </ul>
+
+          {/* Language Switcher Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={scrolled ? "" : "text-white hover:bg-white/10"}
+              >
+                <Languages className="h-5 w-5" />
+                <span className="sr-only">Change language</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {locales.map((loc) => (
+                <DropdownMenuItem key={loc} asChild>
+                  <Link href={`/${loc}/${pathWithoutLocale}`} locale={loc}>
+                    {loc.toUpperCase()} {locale === loc ? "(Current)" : ""}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Button
             asChild
             variant="default"
+            size="sm"
             className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white"
           >
             <Link href="#contact">Contact Us</Link>
           </Button>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className={`md:hidden p-2 rounded-md ${
-            scrolled ? "hover:bg-gray-100" : "text-white hover:bg-white/10"
-          }`}
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile Menu Button & Switcher */}
+        <div className="flex items-center gap-2 md:hidden">
+          {/* Language Switcher Dropdown (Mobile) */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={scrolled ? "" : "text-white hover:bg-white/10"}
+              >
+                <Languages className="h-5 w-5" />
+                <span className="sr-only">Change language</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {locales.map((loc) => (
+                <DropdownMenuItem key={loc} asChild>
+                  <Link href={`/${loc}/${pathWithoutLocale}`} locale={loc}>
+                    {loc.toUpperCase()} {locale === loc ? "(Current)" : ""}
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <button
+            className={`p-2 rounded-md ${
+              scrolled ? "hover:bg-gray-100" : "text-white hover:bg-white/10"
+            }`}
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="md:hidden py-4 px-4 bg-white border-b">
+        <div className="md:hidden py-4 px-4 bg-white border-t">
           <nav className="flex flex-col space-y-4">
-            <Link
-              href="#why-us"
-              className="text-sm font-medium hover:text-cyan-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              Why Choose Us
-            </Link>
-            <Link
-              href="#use-cases"
-              className="text-sm font-medium hover:text-cyan-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              Use Cases
-            </Link>
-            <Link
-              href="#process"
-              className="text-sm font-medium hover:text-cyan-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              Our Process
-            </Link>
-            <Link
-              href="/blog"
-              className="text-sm font-medium hover:text-cyan-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              Blog
-            </Link>
-            <Link
-              href="#testimonials"
-              className="text-sm font-medium hover:text-cyan-600 transition-colors"
-              onClick={toggleMenu}
-            >
-              Testimonials
-            </Link>
+            <ul className="flex flex-col space-y-4">
+              {/* Mobile Nav Links - Updated hrefs */}
+              <li>
+                <Link
+                  href={`/${locale}/`}
+                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  onClick={toggleMenu}
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${locale}/inner-state-rag`}
+                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  onClick={toggleMenu}
+                >
+                  Inner State RAG
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${locale}/inner-state`}
+                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  onClick={toggleMenu}
+                >
+                  Inner State
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${locale}/rag`}
+                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  onClick={toggleMenu}
+                >
+                  RAG
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${locale}/rag-glossary`}
+                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  onClick={toggleMenu}
+                >
+                  RAG Glossary
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={`/${locale}/blog`}
+                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  onClick={toggleMenu}
+                >
+                  Blog
+                </Link>
+              </li>
+            </ul>
             <Button
               asChild
               variant="default"
               className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white w-full"
-              onClick={toggleMenu}
+              onClick={toggleMenu} // Added onClick here too
             >
               <Link href="#contact">Contact Us</Link>
             </Button>
@@ -189,4 +287,9 @@ export function Navbar() {
       )}
     </header>
   );
+}
+
+// Add this style to your global CSS file or a layout component
+export function NavbarSpacer() {
+  return <div className="h-16 mb-8" aria-hidden="true"></div>;
 }

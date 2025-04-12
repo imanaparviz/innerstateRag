@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 export function UseCases() {
   const cases = [
     {
-      icon: <HeadphonesIcon className="h-10 w-10 text-cyan-600" />,
       title: "Customer Support Enhancement",
       description:
         "Our RAG implementation helped a Fortune 500 company enhance their customer support by providing agents with instant access to relevant information.",
@@ -15,10 +14,9 @@ export function UseCases() {
         { value: "25%", label: "Faster Resolution" },
         { value: "92%", label: "Agent Satisfaction" },
       ],
-      image: "/placeholder.svg?height=300&width=400",
+      image: "/three.png",
     },
     {
-      icon: <Users className="h-10 w-10 text-cyan-600" />,
       title: "Employee Knowledge Hub",
       description:
         "We transformed an enterprise's fragmented knowledge base into a unified, AI-powered assistant that employees could query in natural language.",
@@ -27,10 +25,9 @@ export function UseCases() {
         { value: "65%", label: "Increased Knowledge Sharing" },
         { value: "3.2h", label: "Weekly Time Saved Per Employee" },
       ],
-      image: "/placeholder.svg?height=300&width=400",
+      image: "/two.png",
     },
     {
-      icon: <Search className="h-10 w-10 text-cyan-600" />,
       title: "Market Research Assistant",
       description:
         "Our RAG system helped a consulting firm analyze vast amounts of market reports and research papers to generate insights and recommendations.",
@@ -39,7 +36,7 @@ export function UseCases() {
         { value: "45%", label: "More Sources Analyzed" },
         { value: "4.8/5", label: "Accuracy Rating" },
       ],
-      image: "/placeholder.svg?height=300&width=400",
+      image: "/one.png",
     },
   ];
 
@@ -62,16 +59,13 @@ export function UseCases() {
               key={index}
               className="border-none shadow-md overflow-hidden flex flex-col"
             >
-              <div className="relative h-48 w-full">
+              <div className="relative h-60 w-full">
                 <Image
                   src={case_.image || "/placeholder.svg"}
                   alt={case_.title}
                   fill
                   className="object-cover"
                 />
-                <div className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md">
-                  {case_.icon}
-                </div>
               </div>
               <CardHeader>
                 <CardTitle className="text-xl">{case_.title}</CardTitle>

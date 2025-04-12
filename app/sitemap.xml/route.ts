@@ -26,6 +26,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
     },
     {
+      url: `${BASE_URL}/rag`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/inner-state`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/inner-state-rag`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 1.0,
+    },
+    {
+      url: `${BASE_URL}/rag-glossary`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/blog`,
       lastModified: new Date().toISOString(),
       changeFrequency: "weekly",

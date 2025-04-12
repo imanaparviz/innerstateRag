@@ -3,21 +3,23 @@ import Link from "next/link";
 // Navigation-Links in drei Spalten wie im Luma-Footer
 const footerLinks = [
   {
-    title: "Features",
+    title: "Solutions",
     links: [
+      { label: "Inner State RAG", href: "/inner-state-rag" },
+      { label: "Inner State", href: "/inner-state" },
+      { label: "RAG Technology", href: "/rag" },
       { label: "API", href: "/api" },
-      { label: "Pricing", href: "#contact" },
     ],
   },
   {
-    title: "Community",
+    title: "Resources",
     links: [
-      { label: "Join Us", href: "#contact" },
+      { label: "Blog", href: "/blog" },
       { label: "Learning Hub", href: "/learning" },
     ],
   },
   {
-    title: "Legal",
+    title: "Company",
     links: [
       { label: "Contact Us", href: "#contact" },
       { label: "Our Team", href: "/teams" },
@@ -42,15 +44,16 @@ const Footer = () => {
       <div className="absolute inset-0 w-full h-full bg-black"></div>
 
       {/* Hintergrundbild als separates Div mit absoluter Positionierung und kleinerer Größe */}
-      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center scale-110 overflow-hidden">
         <div
           className="w-4/5 h-4/5 relative"
           style={{
-            backgroundImage: "url('/footerBg.jpeg')",
+            backgroundImage: "url('/footerBg.png')",
             backgroundSize: "contain",
             backgroundPosition: "center center",
             backgroundRepeat: "no-repeat",
             opacity: 1,
+            transform: "translateX(20%)",
           }}
         >
           {/* Verstärkter Gradient-Overlay für den Fade-Effekt an den Rändern */}
@@ -108,11 +111,8 @@ const Footer = () => {
         {/* Obere Navigationsleiste - Wie im Luma-Design */}
         <div className="flex items-center justify-between mb-20 pt-4">
           {/* Logo links */}
-          <Link href="/" className="text-white">
-            <div className="flex flex-col">
-              <span className="text-2xl font-light leading-none">Dream</span>
-              <span className="text-lg font-bold tracking-wide">MACHINE</span>
-            </div>
+          <Link href="/" className="text-white text-3xl font-bold">
+            Inner State RAG
           </Link>
 
           {/* Rechte Navigation */}
@@ -148,31 +148,31 @@ const Footer = () => {
           </h1>
         </div>
 
-        {/* Zwei-Spalten-Layout: Links Produktangebot, Rechts Community und Rechtliches */}
-        <div className="flex flex-col md:flex-row justify-between">
-          {/* Linke Spalte - Produktangebot */}
-          <div className="w-full md:w-1/3 mb-12 md:mb-0">
-            <h3 className="text-xl font-semibold mb-6 text-white">
-              {footerLinks[0].title}
-            </h3>
-            <ul className="space-y-4">
-              {footerLinks[0].links.map((link, linkIndex) => (
-                <li key={linkIndex}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Angepasstes Layout: [Features Community] links, [Legal] rechts */}
+        <div className="flex flex-col md:flex-row justify-between mt-16">
+          {/* Gruppe für Features und Community */}
+          <div className="flex flex-col md:flex-row gap-8 lg:gap-16 mb-12 md:mb-0">
+            {/* Features */}
+            <div className="w-full md:w-auto">
+              <h3 className="text-xl font-semibold mb-6 text-white">
+                {footerLinks[0].title}
+              </h3>
+              <ul className="space-y-4">
+                {footerLinks[0].links.map((link, linkIndex) => (
+                  <li key={linkIndex}>
+                    <Link
+                      href={link.href}
+                      className="text-gray-300 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Rechte Spalte - Community und Rechtliches nebeneinander */}
-          <div className="w-full md:w-2/3 flex flex-col sm:flex-row justify-end space-y-12 sm:space-y-0 sm:space-x-16">
             {/* Community */}
-            <div>
+            <div className="w-full md:w-auto">
               <h3 className="text-xl font-semibold mb-6 text-white">
                 {footerLinks[1].title}
               </h3>
@@ -189,30 +189,30 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
+          </div>
 
-            {/* Rechtliches */}
-            <div>
-              <h3 className="text-xl font-semibold mb-6 text-white">
-                {footerLinks[2].title}
-              </h3>
-              <ul className="space-y-4">
-                {footerLinks[2].links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <Link
-                      href={link.href}
-                      className="text-gray-300 hover:text-white transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Legal Section - separat */}
+          <div className="w-full md:w-auto mb-12 md:mb-0">
+            <h3 className="text-xl font-semibold mb-6 text-white">
+              {footerLinks[2].title}
+            </h3>
+            <ul className="space-y-4">
+              {footerLinks[2].links.map((link, linkIndex) => (
+                <li key={linkIndex}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-300 hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
         {/* Copyright-Hinweis */}
-        <div className="mt-auto pt-8 text-sm text-gray-400">
+        <div className="mt-auto pt-8 text-sm text-gray-400 text-center">
           &copy; {currentYear} Your Company Name. All rights reserved.
         </div>
       </div>
