@@ -96,7 +96,11 @@ export function Navbar() {
             <li>
               <Link
                 href={`/${locale}/`}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                className={`text-sm font-medium transition-colors ${
+                  scrolled
+                    ? "text-gray-600 hover:text-gray-900"
+                    : "text-white hover:text-gray-300"
+                }`}
               >
                 Home
               </Link>
@@ -104,7 +108,11 @@ export function Navbar() {
             <li>
               <Link
                 href={`/${locale}/inner-state-rag`}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                className={`text-sm font-medium transition-colors ${
+                  scrolled
+                    ? "text-gray-600 hover:text-gray-900"
+                    : "text-white hover:text-gray-300"
+                }`}
               >
                 Inner State RAG
               </Link>
@@ -112,7 +120,11 @@ export function Navbar() {
             <li>
               <Link
                 href={`/${locale}/inner-state`}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                className={`text-sm font-medium transition-colors ${
+                  scrolled
+                    ? "text-gray-600 hover:text-gray-900"
+                    : "text-white hover:text-gray-300"
+                }`}
               >
                 Inner State
               </Link>
@@ -120,7 +132,11 @@ export function Navbar() {
             <li>
               <Link
                 href={`/${locale}/rag`}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                className={`text-sm font-medium transition-colors ${
+                  scrolled
+                    ? "text-gray-600 hover:text-gray-900"
+                    : "text-white hover:text-gray-300"
+                }`}
               >
                 RAG
               </Link>
@@ -128,7 +144,11 @@ export function Navbar() {
             <li>
               <Link
                 href={`/${locale}/rag-glossary`}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                className={`text-sm font-medium transition-colors ${
+                  scrolled
+                    ? "text-gray-600 hover:text-gray-900"
+                    : "text-white hover:text-gray-300"
+                }`}
               >
                 RAG Glossary
               </Link>
@@ -136,7 +156,11 @@ export function Navbar() {
             <li>
               <Link
                 href={`/${locale}/blog`}
-                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                className={`text-sm font-medium transition-colors ${
+                  scrolled
+                    ? "text-gray-600 hover:text-gray-900"
+                    : "text-white hover:text-gray-300"
+                }`}
               >
                 Blog
               </Link>
@@ -222,7 +246,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/`}
-                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
                   onClick={toggleMenu}
                 >
                   Home
@@ -231,7 +255,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/inner-state-rag`}
-                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
                   onClick={toggleMenu}
                 >
                   Inner State RAG
@@ -240,7 +264,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/inner-state`}
-                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
                   onClick={toggleMenu}
                 >
                   Inner State
@@ -249,7 +273,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/rag`}
-                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
                   onClick={toggleMenu}
                 >
                   RAG
@@ -258,7 +282,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/rag-glossary`}
-                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
                   onClick={toggleMenu}
                 >
                   RAG Glossary
@@ -267,7 +291,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/blog`}
-                  className="text-sm font-medium hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
                   onClick={toggleMenu}
                 >
                   Blog

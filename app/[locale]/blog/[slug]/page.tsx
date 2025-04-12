@@ -6,10 +6,11 @@ import Footer from "@/components/footer";
 import { locales } from "@/i18n"; // Assuming i18n.ts exports locales
 import { format, parseISO } from "date-fns";
 
-// Define strong typing for the page parameters
-type BlogPageParams = {
-  slug: string;
-  locale: string;
+type PageParams = {
+  params: {
+    slug: string;
+    locale: string;
+  };
 };
 
 // Generate static paths for all blog posts in all locales
@@ -29,9 +30,7 @@ export async function generateStaticParams() {
 // Generate metadata for a specific blog post
 export async function generateMetadata({
   params,
-}: {
-  params: BlogPageParams;
-}): Promise<Metadata> {
+}: PageParams): Promise<Metadata> {
   const post = getBlogPostBySlug(params.slug);
 
   if (!post) {
@@ -118,13 +117,7 @@ const generateBlogPostingJsonLd = (post: BlogPost, locale: string) => {
 };
 
 // Blog Post Page Component
-export default function BlogPostPage({
-  params,
-  searchParams,
-}: {
-  params: BlogPageParams;
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default function Page({ params }: PageParams) {
   const post = getBlogPostBySlug(params.slug);
 
   if (!post) {
