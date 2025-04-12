@@ -1,7 +1,5 @@
 import React from "react";
 import { Metadata } from "next";
-import { Navbar, NavbarSpacer } from "@/components/navbar";
-import Footer from "@/components/footer";
 import { CtaSection } from "@/components/sections/cta-section";
 import {
   Database,
@@ -89,9 +87,6 @@ export default function ApiPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main className="flex min-h-screen flex-col">
-        <Navbar />
-        <NavbarSpacer />
-
         <section className="container mx-auto px-4 py-8 md:py-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">
             RAG Development Services & API
@@ -413,7 +408,6 @@ export default function ApiPage() {
         </section>
 
         <CtaSection />
-        <Footer />
       </main>
     </>
   );

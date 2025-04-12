@@ -5,7 +5,6 @@ import Footer from "@/components/footer";
 import { Metadata } from "next";
 import { getBlogPosts } from "@/lib/blog";
 import { Navbar, NavbarSpacer } from "@/components/navbar";
-import { useLocale } from "next-intl";
 import { format, parseISO } from "date-fns";
 
 // Add Metadata Export
@@ -59,9 +58,8 @@ const jsonLd = {
   },
 };
 
-export default function BlogPage() {
+export default function BlogPage({ params }: { params: { locale: string } }) {
   const blogPosts = getBlogPosts();
-  const locale = useLocale();
 
   return (
     <>
@@ -94,7 +92,7 @@ export default function BlogPage() {
                 key={post.slug}
                 className="flex flex-col overflow-hidden rounded-lg shadow-lg transition-shadow hover:shadow-xl border border-gray-200"
               >
-                <Link href={`/${locale}/blog/${post.slug}`}>
+                <Link href={`/${params.locale}/blog/${post.slug}`}>
                   <div className="relative h-48 w-full bg-gray-200">
                     <Image
                       src={post.ogImage || "/placeholder.svg"}
@@ -112,7 +110,7 @@ export default function BlogPage() {
                         {post.tags[0].toUpperCase()}
                       </p>
                     )}
-                    <Link href={`/${locale}/blog/${post.slug}`}>
+                    <Link href={`/${params.locale}/blog/${post.slug}`}>
                       <h2 className="mt-2 text-xl font-semibold text-gray-900 hover:text-cyan-700 line-clamp-2">
                         {post.title}
                       </h2>
