@@ -7,10 +7,8 @@ import { locales } from "@/i18n"; // Assuming i18n.ts exports locales
 import { format, parseISO } from "date-fns";
 
 type PageParams = {
-  params: {
-    slug: string;
-    locale: string;
-  };
+  params: Promise<{ slug: string; locale: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 // Generate static paths for all blog posts in all locales
@@ -30,8 +28,11 @@ export async function generateStaticParams() {
 // Generate metadata for a specific blog post
 export async function generateMetadata({
   params,
-}: PageParams): Promise<Metadata> {
-  const post = getBlogPostBySlug(params.slug);
+}: {
+  params: Promise<{ slug: string; locale: string }>;
+}): Promise<Metadata> {
+  const { slug, locale } = await params;
+  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     return {
@@ -53,7 +54,7 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://innerstaterag.com/${params.locale}/blog/${post.slug}`,
+      url: `https://innerstaterag.com/${locale}/blog/${post.slug}`,
       type: "article",
       publishedTime: new Date(post.date).toISOString(),
       authors: post.author ? [post.author] : ["Inner State RAG Team"],
@@ -69,13 +70,16 @@ export async function generateMetadata({
       images: post.twitterImage ? [post.twitterImage] : ["/og-image.png"], // Default Twitter image
     },
     alternates: {
-      canonical: `https://innerstaterag.com/${params.locale}/blog/${post.slug}`,
+      canonical: `https://innerstaterag.com/${locale}/blog/${post.slug}`,
     },
   };
 
   // Add lastModified if available
-  if (post.lastModified) {
-    metadata.openGraph.modifiedTime = new Date(post.lastModified).toISOString();
+  if (post.lastModified && metadata.openGraph) {
+    // @ts-ignore - Next.js types may be incomplete
+    metadata.openGraph.modified_time = new Date(
+      post.lastModified
+    ).toISOString();
   }
 
   return metadata;
@@ -117,8 +121,16 @@ const generateBlogPostingJsonLd = (post: BlogPost, locale: string) => {
 };
 
 // Blog Post Page Component
-export default function Page({ params }: PageParams) {
-  const post = getBlogPostBySlug(params.slug);
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string; locale: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { slug, locale } = await params;
+  const searchParamsData = searchParams ? await searchParams : {};
+  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     notFound(); // Trigger 404 if post doesn't exist
@@ -130,7 +142,7 @@ export default function Page({ params }: PageParams) {
     ? format(parseISO(post.lastModified), "MMMM d, yyyy")
     : null;
 
-  const jsonLdString = generateBlogPostingJsonLd(post, params.locale);
+  const jsonLdString = generateBlogPostingJsonLd(post, locale);
 
   return (
     <>

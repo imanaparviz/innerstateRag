@@ -3,6 +3,10 @@ import { getBlogPosts } from "@/lib/blog"; // Import the function to get blog po
 
 const BASE_URL = "https://innerstaterag.com"; // Replaced placeholder with actual domain
 
+/**
+ * Generates sitemap.xml content
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
   // Get all blog posts
   const posts = getBlogPosts();

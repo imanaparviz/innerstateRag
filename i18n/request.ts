@@ -1,14 +1,16 @@
 import { getRequestConfig } from "next-intl/server";
+import type { RequestConfig } from "next-intl/server";
 
 // Lade die gemeinsamen Einstellungen
 const locales = ["en", "de", "sv"];
 const defaultLocale = "en";
 
-export default getRequestConfig(async ({ locale }) => {
+export default getRequestConfig(async ({ locale }): Promise<RequestConfig> => {
   // Verwende standardmäßig die Standardsprache, wenn locale undefiniert ist
-  const resolvedLocale = locales.includes(locale as any)
-    ? locale
-    : defaultLocale;
+  const resolvedLocale =
+    typeof locale === "string" && locales.includes(locale)
+      ? locale
+      : defaultLocale;
 
   try {
     // Laden der Übersetzungsdatei
@@ -17,7 +19,6 @@ export default getRequestConfig(async ({ locale }) => {
     return {
       locale: resolvedLocale,
       messages,
-      timeZone: "Europe/Berlin",
     };
   } catch (error) {
     console.error(
@@ -28,7 +29,6 @@ export default getRequestConfig(async ({ locale }) => {
     return {
       locale: resolvedLocale,
       messages: {},
-      timeZone: "Europe/Berlin",
     };
   }
 });

@@ -58,7 +58,15 @@ const jsonLd = {
   },
 };
 
-export default function BlogPage({ params }: { params: { locale: string } }) {
+export default async function BlogPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { locale } = await params;
+  const searchParamsData = searchParams ? await searchParams : {};
   const blogPosts = getBlogPosts();
 
   return (
@@ -92,7 +100,7 @@ export default function BlogPage({ params }: { params: { locale: string } }) {
                 key={post.slug}
                 className="flex flex-col overflow-hidden rounded-lg shadow-lg transition-shadow hover:shadow-xl border border-gray-200"
               >
-                <Link href={`/${params.locale}/blog/${post.slug}`}>
+                <Link href={`/${locale}/blog/${post.slug}`}>
                   <div className="relative h-48 w-full bg-gray-200">
                     <Image
                       src={post.ogImage || "/placeholder.svg"}
@@ -110,7 +118,7 @@ export default function BlogPage({ params }: { params: { locale: string } }) {
                         {post.tags[0].toUpperCase()}
                       </p>
                     )}
-                    <Link href={`/${params.locale}/blog/${post.slug}`}>
+                    <Link href={`/${locale}/blog/${post.slug}`}>
                       <h2 className="mt-2 text-xl font-semibold text-gray-900 hover:text-cyan-700 line-clamp-2">
                         {post.title}
                       </h2>

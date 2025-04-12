@@ -17,7 +17,7 @@ export function generateStaticParams() {
 
 // Funktion zum Generieren von sprachspezifischen Metadaten
 export async function generateMetadata(props: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const params = await props.params;
   const locale = params.locale;
@@ -105,7 +105,7 @@ export async function generateMetadata(props: {
 
 export default async function RootLayout(props: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<React.ReactElement> {
   // Extrahiere Parameter und sicherstelle, dass sie definiert sind
   const params = await props.params;

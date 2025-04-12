@@ -89,7 +89,7 @@ export function getBlogPosts(): Omit<BlogPost, "contentHtml">[] {
         return null; // Return null on error during processing
       }
     })
-    .filter((post): post is Omit<BlogPost, "contentHtml"> => post !== null); // Filter out nulls from errors
+    .filter((post): post is Exclude<typeof post, null> => post !== null); // Filter out nulls from errors
 
   // Sort posts by valid date in descending order
   return allPostsData.sort((a, b) => {
