@@ -6,6 +6,12 @@ import Footer from "@/components/footer";
 import { locales } from "@/i18n"; // Assuming i18n.ts exports locales
 import { format, parseISO } from "date-fns";
 
+// Define the standard page props type
+type Props = {
+  params: { slug: string; locale: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
 // Generate static paths for all blog posts in all locales
 export async function generateStaticParams() {
   const posts = getBlogPosts(); // Fetches metadata for all posts
@@ -111,12 +117,8 @@ const generateBlogPostingJsonLd = (post: BlogPost, locale: string) => {
   return JSON.stringify(schema);
 };
 
-// Blog Post Page Component
-export default function BlogPostPage({
-  params,
-}: {
-  params: { slug: string; locale: string };
-}) {
+// Blog Post Page Component - Use the explicit Props type
+export default function BlogPostPage({ params }: Props) {
   const post = getBlogPostBySlug(params.slug);
 
   if (!post) {
