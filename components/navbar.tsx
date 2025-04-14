@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Languages } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -199,6 +200,9 @@ export function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* Theme Toggle for desktop */}
+          <ThemeToggle />
+
           <Button
             asChild
             variant="default"
@@ -234,6 +238,9 @@ export function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* Theme Toggle for mobile */}
+          <ThemeToggle />
+
           <button
             className={`p-2 rounded-md ${
               scrolled ? "hover:bg-gray-100" : "text-white hover:bg-white/10"
@@ -248,14 +255,14 @@ export function Navbar() {
 
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="md:hidden py-4 px-4 bg-white border-t">
+        <div className="md:hidden py-4 px-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
           <nav className="flex flex-col space-y-4">
             <ul className="flex flex-col space-y-4">
               {/* Mobile Nav Links - Updated hrefs */}
               <li>
                 <Link
                   href={`/${locale}/`}
-                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
                   onClick={toggleMenu}
                 >
                   Home
@@ -264,7 +271,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/inner-state-rag`}
-                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
                   onClick={toggleMenu}
                 >
                   Inner State RAG
@@ -273,7 +280,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/inner-state`}
-                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
                   onClick={toggleMenu}
                 >
                   Inner State
@@ -282,7 +289,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/rag`}
-                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
                   onClick={toggleMenu}
                 >
                   RAG
@@ -291,7 +298,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/rag-glossary`}
-                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
                   onClick={toggleMenu}
                 >
                   RAG Glossary
@@ -300,7 +307,7 @@ export function Navbar() {
               <li>
                 <Link
                   href={`/${locale}/blog`}
-                  className="text-sm font-medium text-gray-800 hover:text-cyan-600 transition-colors"
+                  className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
                   onClick={toggleMenu}
                 >
                   Blog

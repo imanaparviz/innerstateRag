@@ -132,24 +132,9 @@ export default async function RootLayout(props: {
   }
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <head>
-        {/* Preload wichtiger Assets für bessere Performance */}
-        <link rel="preload" href="/og-image.png" as="image" />
-        <link
-          rel="preload"
-          href="/fonts/inter.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body className={inter.className} suppressHydrationWarning>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-        <Script src="/shared-scripts.js" strategy="afterInteractive" />
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      {children}
+      <Script src="/shared-scripts.js" strategy="afterInteractive" />
+    </NextIntlClientProvider>
   );
 }

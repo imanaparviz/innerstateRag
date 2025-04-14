@@ -5,6 +5,8 @@ import { Navbar, NavbarSpacer } from "@/components/navbar";
 import Footer from "@/components/footer";
 import { locales } from "@/i18n"; // Assuming i18n.ts exports locales
 import { format, parseISO } from "date-fns";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 type PageParams = {
   params: Promise<{ slug: string; locale: string }>;
@@ -41,16 +43,23 @@ export async function generateMetadata({
     };
   }
 
+  // Process keywords - handle both string and array formats
+  let keywordsArray: string[] = [];
+  if (post.keywords) {
+    if (Array.isArray(post.keywords)) {
+      keywordsArray = post.keywords;
+    } else if (typeof post.keywords === "string") {
+      keywordsArray = post.keywords.split(",").map((k) => k.trim());
+    }
+  } else {
+    keywordsArray = ["RAG", "Inner State", "AI", "Blog"];
+  }
+
   // Use post frontmatter for metadata
   const metadata: Metadata = {
     title: `${post.title} | Inner State RAG Blog`,
     description: post.description,
-    keywords: post.keywords?.split(",").map((k) => k.trim()) || [
-      "RAG",
-      "Inner State",
-      "AI",
-      "Blog",
-    ],
+    keywords: keywordsArray,
     openGraph: {
       title: post.title,
       description: post.description,
@@ -87,6 +96,18 @@ export async function generateMetadata({
 
 // Helper to generate BlogPosting JSON-LD
 const generateBlogPostingJsonLd = (post: BlogPost, locale: string) => {
+  // Process keywords for JSON-LD
+  let keywordsString = "";
+  if (post.keywords) {
+    if (Array.isArray(post.keywords)) {
+      keywordsString = post.keywords.join(", ");
+    } else if (typeof post.keywords === 'string') {
+      keywordsString = post.keywords;
+    }
+  } else if (post.tags && post.tags.length > 0) {
+    keywordsString = post.tags.join(", ");
+  }
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -115,7 +136,7 @@ const generateBlogPostingJsonLd = (post: BlogPost, locale: string) => {
       "@type": "WebPage",
       "@id": `https://innerstaterag.com/${locale}/blog/${post.slug}`,
     },
-    keywords: post.keywords || post.tags?.join(", ") || "",
+    keywords: keywordsString,
   };
   return JSON.stringify(schema);
 };
@@ -184,10 +205,42 @@ export default async function Page({
           </header>
 
           {/* Post Content */}
-          <div
-            className="prose prose-lg max-w-none dark:prose-invert prose-img:rounded-lg prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 dark:hover:prose-a:text-blue-300"
-            dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-          />
+          <div className="blog-content">
+            <div
+              className="prose prose-lg max-w-none dark:prose-invert 
+              prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
+              prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
+              prose-h2:text-2xl prose-h2:mt-6 prose-h2:mb-3
+              prose-h3:text-xl prose-h3:mt-4 prose-h3:mb-2
+              prose-p:my-4 prose-p:text-gray-700 dark:prose-p:text-gray-300
+              prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
+              prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
+              prose-li:my-2
+              prose-img:rounded-lg 
+              prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 dark:hover:prose-a:text-blue-300"
+              dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+            />
+
+            {/* Fallback to ReactMarkdown if HTML rendering doesn't work properly */}
+            {false && (
+              <ReactMarkdown
+                className="prose prose-lg max-w-none dark:prose-invert 
+                prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
+                prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
+                prose-h2:text-2xl prose-h2:mt-6 prose-h2:mb-3
+                prose-h3:text-xl prose-h3:mt-4 prose-h3:mb-2
+                prose-p:my-4 prose-p:text-gray-700 dark:prose-p:text-gray-300
+                prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
+                prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
+                prose-li:my-2
+                prose-img:rounded-lg 
+                prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 dark:hover:prose-a:text-blue-300"
+                remarkPlugins={[remarkGfm]}
+              >
+                {post.content}
+              </ReactMarkdown>
+            )}
+          </div>
         </article>
 
         <Footer />

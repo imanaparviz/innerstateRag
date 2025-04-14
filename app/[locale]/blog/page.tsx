@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { getBlogPosts } from "@/lib/blog";
 import { Navbar, NavbarSpacer } from "@/components/navbar";
 import { format, parseISO } from "date-fns";
+import ReactMarkdown from "react-markdown";
 
 // Add Metadata Export
 export const metadata: Metadata = {

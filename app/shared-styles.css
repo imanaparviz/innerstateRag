@@ -14,6 +14,9 @@
   --font-headings: "Georgia", serif;
   --footer-text: #e0e0e0;
   --footer-link-hover: #00a8e8;
+  --review-bg: #ffffff;
+  --review-text: #333;
+  --review-border: #dee2e6;
 }
 
 body {
@@ -397,21 +400,29 @@ table tr:nth-child(even) {
   margin-right: 0;
 }
 
-/* Schema.org Marked-up Content */
+/* Review Section */
 .review {
-  border-left: 3px solid var(--accent-color);
-  padding-left: 15px;
-  margin: 20px 0;
+  margin: 30px 0;
+  padding: 25px;
+  background-color: var(--review-bg);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--review-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  color: var(--review-text);
+  position: relative;
 }
 
 .review .rating {
-  color: #f8d448;
-  margin-bottom: 5px;
+  color: gold;
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
 .review .author {
   font-style: italic;
-  color: var(--secondary-color);
+  margin-top: 10px;
+  text-align: right;
+  color: var(--accent-color);
 }
 
 /* Accessibility */
@@ -464,6 +475,9 @@ table tr:nth-child(even) {
     --primary-color: #0050a0;
     --secondary-color: #0074cc;
     --accent-color: #00c8ff;
+    --review-bg: #222222;
+    --review-text: #f0f0f0;
+    --review-border: #444444;
   }
 
   body {
@@ -541,7 +555,9 @@ table tr:nth-child(even) {
   }
 
   .review {
-    color: var(--text-color);
+    background-color: var(--review-bg);
+    color: var(--review-text);
+    border-color: var(--review-border);
   }
 
   .review .author {
@@ -642,5 +658,36 @@ table tr:nth-child(even) {
   span.bg-gray-200 {
     background-color: #333 !important;
     color: var(--white) !important;
+  }
+
+  /* Additional blog dark mode styles */
+  .prose p {
+    color: var(--text-color) !important;
+  }
+
+  .prose li {
+    color: var(--text-color) !important;
+  }
+
+  .dark .markdown-content {
+    color: var(--text-color) !important;
+  }
+
+  .dark .article-body {
+    color: var(--text-color) !important;
+  }
+
+  .dark .article-content {
+    color: var(--text-color) !important;
+  }
+
+  .cta {
+    background-color: var(--gray-100);
+    color: var(--text-color);
+    border: 1px solid var(--gray-300);
+  }
+
+  .cta h2 {
+    color: var(--white);
   }
 }

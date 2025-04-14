@@ -46,16 +46,16 @@ export default function PrivacyPage() {
         {" "}
         {/* Consistent background */}
         <div className="container mx-auto max-w-4xl px-4">
-          <div className="bg-white rounded-lg shadow-md p-8 md:p-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 md:p-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
               Privacy Policy for RAG Consulting Services
             </h1>
-            <p className="text-sm text-gray-500 mb-8">
+            <p className="text-sm text-gray-500 dark:text-gray-300 mb-8">
               Last Updated: April 11, 2025
             </p>
 
-            <div className="prose prose-lg max-w-none text-gray-700 space-y-6">
-              <p className="text-lg font-semibold text-gray-800">
+            <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-200 space-y-6">
+              <p className="text-lg font-semibold text-gray-800 dark:text-gray-100">
                 Introduction & Our Commitment to RAG Privacy
               </p>
               <p>
@@ -66,13 +66,13 @@ export default function PrivacyPage() {
                 outlines our commitment to protecting your information and
                 details how we collect, use, secure, and disclose data in the
                 context of our RAG consulting services.
-                <strong className="block mt-2">
+                <strong className="block mt-2 dark:text-white">
                   Note: This policy is currently a template and requires legal
                   review before finalization.
                 </strong>
               </p>
 
-              <h2 className="!text-xl !font-semibold !mt-8">
+              <h2 className="!text-xl !font-semibold !mt-8 dark:!text-gray-100">
                 1. Information We Handle in RAG Context
               </h2>
               <p>
@@ -268,7 +268,7 @@ export default function PrivacyPage() {
             <div className="mt-10 text-center">
               <a
                 href="/"
-                className="inline-block text-blue-600 hover:underline"
+                className="inline-block text-blue-600 dark:text-blue-400 hover:underline"
               >
                 &larr; Back to Homepage
               </a>

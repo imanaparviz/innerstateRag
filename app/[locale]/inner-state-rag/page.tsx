@@ -293,19 +293,21 @@ export default function InnerStateRAGPage() {
 
             <div className="review">
               <div className="rating">★★★★★</div>
-              <p>
+              <p className="text-gray-800 dark:text-gray-100">
                 "Inner State RAG has transformed our knowledge management
                 system. The context awareness is unlike anything we've seen
                 before."
               </p>
-              <p className="author">
+              <p className="author text-cyan-600 dark:text-cyan-400">
                 - Sarah Johnson, CTO at Enterprise Solutions
               </p>
             </div>
 
-            <div className="cta">
-              <h2>Ready to Experience Inner State RAG?</h2>
-              <p>
+            <div className="cta bg-gray-100 dark:bg-gray-800">
+              <h2 className="text-gray-900 dark:text-white">
+                Ready to Experience Inner State RAG?
+              </h2>
+              <p className="text-gray-700 dark:text-gray-300">
                 Discover how our proprietary technology can transform your AI
                 applications.
               </p>

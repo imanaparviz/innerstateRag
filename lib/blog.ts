@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
+import remarkGfm from "remark-gfm";
 
 const postsDirectory = path.join(process.cwd(), "content/blog");
 
@@ -22,13 +23,14 @@ export interface BlogPost {
   ogImage?: string; // Optional: Path for OpenGraph image
   twitterImage?: string; // Optional: Path for Twitter card image
   contentHtml: string; // Processed HTML content of the post
+  content: string; // Raw markdown content
 }
 
 /**
  * Reads all blog post metadata (excluding content) from the filesystem.
  * Returns an array of post metadata objects, sorted by date descending.
  */
-export function getBlogPosts(): Omit<BlogPost, "contentHtml">[] {
+export function getBlogPosts(): Omit<BlogPost, "contentHtml" | "content">[] {
   let filenames: string[] = [];
   try {
     filenames = fs.readdirSync(postsDirectory);
@@ -125,50 +127,71 @@ export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   let processedContent;
   try {
     processedContent = remark()
+      .use(remarkGfm) // GitHub Flavored Markdown for tables, task lists, etc.
       .use(html, { sanitize: false })
       .processSync(matterResult.content);
+
+    // Post-process the HTML to ensure proper styling
+    let formattedHtml = processedContent.toString();
+
+    // Improve headings and list rendering
+    formattedHtml = formattedHtml
+      // Make sure headings have proper margins and styling
+      .replace(/<h1/g, '<h1 class="text-3xl font-bold my-6"')
+      .replace(/<h2/g, '<h2 class="text-2xl font-bold mt-8 mb-4"')
+      .replace(/<h3/g, '<h3 class="text-xl font-bold mt-6 mb-3"')
+      // Style lists properly
+      .replace(/<ul>/g, '<ul class="my-4 list-disc pl-8">')
+      .replace(/<ol>/g, '<ol class="my-4 list-decimal pl-8">')
+      .replace(/<li>/g, '<li class="my-2">');
+
+    // Replace the processed content
+    processedContent = { toString: () => formattedHtml };
+
+    const content = matterResult.content;
+
+    const postData: Omit<BlogPost, "tags"> & { tags?: string[] | string } = {
+      slug,
+      contentHtml: processedContent.toString(),
+      content,
+      title: matterResult.data.title || "Untitled Post",
+      date: matterResult.data.date || new Date().toISOString().split("T")[0],
+      lastModified: matterResult.data.lastModified,
+      description: matterResult.data.description || "No description provided.",
+      keywords: matterResult.data.keywords,
+      author: matterResult.data.author,
+      tags: matterResult.data.tags, // Keep original type here for validation
+      ogImage: matterResult.data.ogImage,
+      twitterImage: matterResult.data.twitterImage,
+    };
+
+    // Validate and potentially convert tags
+    let validatedTags: string[] | undefined = undefined;
+    if (postData.tags) {
+      if (Array.isArray(postData.tags)) {
+        validatedTags = postData.tags;
+      } else if (typeof postData.tags === "string") {
+        console.warn(
+          `Tags field in ${slug}.md is a string. Converting to array.`
+        );
+        validatedTags = postData.tags.split(",").map((t) => t.trim());
+      } else {
+        console.warn(
+          `Tags field in ${slug}.md has invalid type. Ignoring tags.`
+        );
+      }
+    }
+
+    // Validate date
+    if (isNaN(new Date(postData.date).getTime())) {
+      console.error(`Invalid date format in ${slug}.md. Cannot process post.`);
+      return undefined;
+    }
+
+    // Return the final BlogPost object with validated tags
+    return { ...postData, tags: validatedTags };
   } catch (remarkErr) {
     console.error(`Error processing markdown for ${slug}.md:`, remarkErr);
     return undefined;
   }
-
-  const contentHtml = processedContent.toString();
-
-  const postData: Omit<BlogPost, "tags"> & { tags?: string[] | string } = {
-    slug,
-    contentHtml,
-    title: matterResult.data.title || "Untitled Post",
-    date: matterResult.data.date || new Date().toISOString().split("T")[0],
-    lastModified: matterResult.data.lastModified,
-    description: matterResult.data.description || "No description provided.",
-    keywords: matterResult.data.keywords,
-    author: matterResult.data.author,
-    tags: matterResult.data.tags, // Keep original type here for validation
-    ogImage: matterResult.data.ogImage,
-    twitterImage: matterResult.data.twitterImage,
-  };
-
-  // Validate and potentially convert tags
-  let validatedTags: string[] | undefined = undefined;
-  if (postData.tags) {
-    if (Array.isArray(postData.tags)) {
-      validatedTags = postData.tags;
-    } else if (typeof postData.tags === "string") {
-      console.warn(
-        `Tags field in ${slug}.md is a string. Converting to array.`
-      );
-      validatedTags = postData.tags.split(",").map((t) => t.trim());
-    } else {
-      console.warn(`Tags field in ${slug}.md has invalid type. Ignoring tags.`);
-    }
-  }
-
-  // Validate date
-  if (isNaN(new Date(postData.date).getTime())) {
-    console.error(`Invalid date format in ${slug}.md. Cannot process post.`);
-    return undefined;
-  }
-
-  // Return the final BlogPost object with validated tags
-  return { ...postData, tags: validatedTags };
 }

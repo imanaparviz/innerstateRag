@@ -69,13 +69,13 @@ export default function TeamsPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
-      <main className="flex-grow py-12 md:py-20 bg-gray-50">
+      <main className="flex-grow py-12 md:py-20 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 md:mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
               Meet Our Expert Team
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               The driving force behind our successful RAG implementations –
               dedicated specialists passionate about unlocking your AI's
               potential.
@@ -86,7 +86,7 @@ export default function TeamsPage() {
             {teamMembers.map((member, index) => (
               <div
                 key={index}
-                className="bg-white rounded-lg shadow-lg overflow-hidden text-center p-6 flex flex-col"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden text-center p-6 flex flex-col"
               >
                 <div className="mb-4">
                   <Image
@@ -94,14 +94,16 @@ export default function TeamsPage() {
                     alt={`Photo of ${member.name}`}
                     width={120} // Adjust size as needed
                     height={120}
-                    className="rounded-full mx-auto border-4 border-gray-200"
+                    className="rounded-full mx-auto border-4 border-gray-200 dark:border-gray-700"
                   />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
                   {member.name}
                 </h3>
-                <p className="text-blue-700 font-medium mb-3">{member.role}</p>
-                <p className="text-gray-600 text-sm flex-grow mb-4">
+                <p className="text-blue-700 dark:text-blue-400 font-medium mb-3">
+                  {member.role}
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm flex-grow mb-4">
                   {member.bio}
                 </p>
                 {member.linkedinUrl && member.linkedinUrl !== "#" && (
@@ -109,7 +111,7 @@ export default function TeamsPage() {
                     href={member.linkedinUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto text-blue-600 hover:underline text-sm"
+                    className="mt-auto text-blue-600 dark:text-blue-400 hover:underline text-sm"
                   >
                     View LinkedIn Profile &rarr;
                   </a>
