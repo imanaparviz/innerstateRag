@@ -103,7 +103,7 @@ export function Hero() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white/10"
+                className="border-white text-white hover:bg-gray-700 bg-gray-800/70"
               >
                 <Link href="#use-cases">
                   See{" "}
