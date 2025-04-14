@@ -44,7 +44,7 @@ const Footer = () => {
       <div className="absolute inset-0 w-full h-full bg-black"></div>
 
       {/* Hintergrundbild als separates Div mit absoluter Positionierung und kleinerer Größe */}
-      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center scale-110 overflow-hidden">
+      <div className="absolute inset-0 w-full h-full z-0 flex items-center justify-center overflow-hidden">
         <div
           className="w-4/5 h-4/5 relative"
           style={{

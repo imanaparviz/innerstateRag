@@ -1,1 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import the shared styles */
+@import "./shared-styles.css";
+
+/* Dark mode overrides for better text visibility */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
 /* Add your global styles here */

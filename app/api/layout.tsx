@@ -35,17 +35,11 @@ export default async function ApiLayout({
   const messages = await getMessages(); // Load messages
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className} suppressHydrationWarning>
-        <NextIntlClientProvider locale="en" messages={messages}>
-          {" "}
-          {/* Add Intl Provider */}
-          <Navbar /> {/* Add Navbar */}
-          <NavbarSpacer /> {/* Add Spacer */}
-          {children}
-          <Footer /> {/* Add Footer */}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale="en" messages={messages}>
+      <Navbar /> {/* Add Navbar */}
+      <NavbarSpacer /> {/* Add Spacer */}
+      {children}
+      <Footer /> {/* Add Footer */}
+    </NextIntlClientProvider>
   );
 }

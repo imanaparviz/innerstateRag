@@ -150,17 +150,17 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdString }}
       />
-      <main className="flex min-h-screen flex-col">
+      <main className="flex min-h-screen flex-col dark:bg-gray-900">
         <Navbar />
         <NavbarSpacer />
 
         <article className="container mx-auto px-4 py-8 md:py-12 max-w-3xl">
           {/* Post Header */}
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-gray-900">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-gray-900 dark:text-white">
               {post.title}
             </h1>
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-500 dark:text-gray-400">
               <span>Published on {publishedDate}</span>
               {post.author && <span> by {post.author}</span>}
               {modifiedDate && publishedDate !== modifiedDate && (
@@ -174,7 +174,7 @@ export default async function Page({
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                    className="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2"
                   >
                     #{tag}
                   </span>
@@ -185,7 +185,7 @@ export default async function Page({
 
           {/* Post Content */}
           <div
-            className="prose prose-lg max-w-none prose-img:rounded-lg prose-a:text-blue-600 hover:prose-a:text-blue-800"
+            className="prose prose-lg max-w-none dark:prose-invert prose-img:rounded-lg prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 dark:hover:prose-a:text-blue-300"
             dangerouslySetInnerHTML={{ __html: post.contentHtml }}
           />
         </article>

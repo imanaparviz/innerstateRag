@@ -75,16 +75,16 @@ export default async function BlogPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="flex min-h-screen flex-col">
+      <main className="flex min-h-screen flex-col dark:bg-gray-900">
         <Navbar />
         <NavbarSpacer />
 
         <div className="container mx-auto px-4 py-8 md:py-12">
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
               RAG Consulting Blog
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Expert insights, tutorials, and best practices on Retrieval
               Augmented Generation and Inner State methodology.
             </p>
@@ -98,10 +98,10 @@ export default async function BlogPage({
             {blogPosts.map((post) => (
               <article
                 key={post.slug}
-                className="flex flex-col overflow-hidden rounded-lg shadow-lg transition-shadow hover:shadow-xl border border-gray-200"
+                className="flex flex-col overflow-hidden rounded-lg shadow-lg transition-shadow hover:shadow-xl border border-gray-200 dark:border-gray-700"
               >
                 <Link href={`/${locale}/blog/${post.slug}`}>
-                  <div className="relative h-48 w-full bg-gray-200">
+                  <div className="relative h-48 w-full bg-gray-200 dark:bg-gray-700">
                     <Image
                       src={post.ogImage || "/placeholder.svg"}
                       alt={post.title}
@@ -111,30 +111,30 @@ export default async function BlogPage({
                     />
                   </div>
                 </Link>
-                <div className="p-6 flex flex-col justify-between flex-grow bg-white">
+                <div className="p-6 flex flex-col justify-between flex-grow bg-white dark:bg-gray-800">
                   <div>
                     {post.tags && post.tags.length > 0 && (
-                      <p className="text-sm font-medium text-cyan-600 mb-1">
+                      <p className="text-sm font-medium text-cyan-600 dark:text-cyan-400 mb-1">
                         {post.tags[0].toUpperCase()}
                       </p>
                     )}
                     <Link href={`/${locale}/blog/${post.slug}`}>
-                      <h2 className="mt-2 text-xl font-semibold text-gray-900 hover:text-cyan-700 line-clamp-2">
+                      <h2 className="mt-2 text-xl font-semibold text-gray-900 dark:text-white hover:text-cyan-700 dark:hover:text-cyan-400 line-clamp-2">
                         {post.title}
                       </h2>
                     </Link>
-                    <p className="mt-3 text-sm text-gray-500 line-clamp-3">
+                    <p className="mt-3 text-sm text-gray-500 dark:text-gray-300 line-clamp-3">
                       {post.description}
                     </p>
                   </div>
                   <div className="mt-4 flex items-center">
                     <div>
                       {post.author && (
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
                           {post.author}
                         </p>
                       )}
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
                         {format(parseISO(post.date), "MMM d, yyyy")}
                       </p>
                     </div>
