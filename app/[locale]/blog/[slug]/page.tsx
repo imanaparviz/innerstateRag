@@ -222,7 +222,7 @@ export default async function Page({
             />
 
             {/* Fallback to ReactMarkdown if HTML rendering doesn't work properly */}
-            {false && (
+            {false && post && (
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
@@ -261,7 +261,7 @@ export default async function Page({
                   ),
                 }}
               >
-                {post.content}
+                {post?.content}
               </ReactMarkdown>
             )}
           </div>
