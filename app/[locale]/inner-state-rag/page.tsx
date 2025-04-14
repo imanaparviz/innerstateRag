@@ -77,7 +77,15 @@ export default function InnerStateRAGPage() {
           <div className="container">
             <div className="header-content">
               <Link href="/" className="logo">
-                RAG Consulting
+                <div className="flex items-center">
+                  <img
+                    src="/logo.png"
+                    alt="RAG Consulting Logo"
+                    className="w-12 h-12 mr-3"
+                    style={{ filter: "brightness(1.1) contrast(1.1)" }}
+                  />
+                  <span className="font-bold">RAG Consulting</span>
+                </div>
               </Link>
               <nav className="navigation">
                 <ul>

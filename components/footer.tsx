@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 // Navigation-Links in drei Spalten wie im Luma-Footer
 const footerLinks = [
@@ -111,8 +112,18 @@ const Footer = () => {
         {/* Obere Navigationsleiste - Wie im Luma-Design */}
         <div className="flex items-center justify-between mb-20 pt-4">
           {/* Logo links */}
-          <Link href="/" className="text-white text-3xl font-bold">
-            Inner State RAG
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="Inner State RAG Logo"
+              width={60}
+              height={60}
+              className="mr-3"
+              style={{ filter: "brightness(1.1) contrast(1.1)" }}
+            />
+            <span className="text-white text-3xl font-extrabold">
+              Inner State RAG
+            </span>
           </Link>
 
           {/* Rechte Navigation */}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Languages } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -78,8 +79,16 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           {/* Logo Link - always points to root for the current locale */}
           <Link href={`/${locale}`} className="flex items-center">
+            <Image
+              src="/logo.png"
+              alt="RAG Consulting Logo"
+              width={50}
+              height={50}
+              className="mr-3"
+              style={{ filter: "brightness(1.1) contrast(1.1)" }}
+            />
             <span
-              className={`text-xl font-bold ${
+              className={`text-xl font-extrabold ${
                 scrolled
                   ? "bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent"
                   : "text-white"
