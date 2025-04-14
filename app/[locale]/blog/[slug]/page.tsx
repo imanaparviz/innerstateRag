@@ -101,7 +101,7 @@ const generateBlogPostingJsonLd = (post: BlogPost, locale: string) => {
   if (post.keywords) {
     if (Array.isArray(post.keywords)) {
       keywordsString = post.keywords.join(", ");
-    } else if (typeof post.keywords === 'string') {
+    } else if (typeof post.keywords === "string") {
       keywordsString = post.keywords;
     }
   } else if (post.tags && post.tags.length > 0) {
@@ -224,18 +224,42 @@ export default async function Page({
             {/* Fallback to ReactMarkdown if HTML rendering doesn't work properly */}
             {false && (
               <ReactMarkdown
-                className="prose prose-lg max-w-none dark:prose-invert 
-                prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
-                prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
-                prose-h2:text-2xl prose-h2:mt-6 prose-h2:mb-3
-                prose-h3:text-xl prose-h3:mt-4 prose-h3:mb-2
-                prose-p:my-4 prose-p:text-gray-700 dark:prose-p:text-gray-300
-                prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
-                prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
-                prose-li:my-2
-                prose-img:rounded-lg 
-                prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 dark:hover:prose-a:text-blue-300"
                 remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({ node, ...props }) => (
+                    <h1 className="text-3xl font-bold mt-8 mb-4" {...props} />
+                  ),
+                  h2: ({ node, ...props }) => (
+                    <h2 className="text-2xl font-bold mt-6 mb-3" {...props} />
+                  ),
+                  h3: ({ node, ...props }) => (
+                    <h3 className="text-xl font-bold mt-4 mb-2" {...props} />
+                  ),
+                  p: ({ node, ...props }) => (
+                    <p
+                      className="my-4 text-gray-700 dark:text-gray-300"
+                      {...props}
+                    />
+                  ),
+                  ul: ({ node, ...props }) => (
+                    <ul className="my-4 list-disc pl-6" {...props} />
+                  ),
+                  ol: ({ node, ...props }) => (
+                    <ol className="my-4 list-decimal pl-6" {...props} />
+                  ),
+                  li: ({ node, ...props }) => (
+                    <li className="my-2" {...props} />
+                  ),
+                  img: ({ node, ...props }) => (
+                    <img className="rounded-lg" {...props} />
+                  ),
+                  a: ({ node, ...props }) => (
+                    <a
+                      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+                      {...props}
+                    />
+                  ),
+                }}
               >
                 {post.content}
               </ReactMarkdown>
