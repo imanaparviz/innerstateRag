@@ -1,4 +1,6 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/sections/hero";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
@@ -10,24 +12,10 @@ import Footer from "@/components/footer";
 import { MarketStats } from "@/components/sections/market-stats";
 import { FaqSection } from "@/components/sections/faq";
 
-export const metadata: Metadata = {
-  title:
-    "Inner State RAG: AI Consulting for Optimized Knowledge Retrieval & Reduced Hallucinations",
-  description:
-    "Unlock your proprietary data with Inner State RAG. Expert consulting in Retrieval Augmented Generation using our unique inner state methodology to enhance LLMs, improve accuracy, and deliver ROI.",
-  // Keep alternates from layout or redefine if specific needed
-  alternates: {
-    canonical: `/`, // Assuming root path for default locale homepage
-    languages: {
-      en: "/en",
-      de: "/de",
-      sv: "/sv",
-    },
-  },
-  // Other homepage-specific metadata can be added here if needed
-  // openGraph and twitter will inherit or can be specifically overridden
-};
+// Direkte Einbindung des Loading-Screens (ohne Wrapper)
+import { LoadingScreen } from "@/components/ui/loading-screen";
 
+// JSON-LD Daten
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -100,7 +88,7 @@ const faqJsonLd = {
       name: "What is Retrieval Augmented Generation (RAG)?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Retrieval Augmented Generation (RAG) is a hybrid AI approach that combines information retrieval systems with generative AI models. It enhances LLM responses by retrieving relevant information from a knowledge base before generating content, resulting in more accurate and contextually appropriate outputs.",
+        text: "Retrieval Augmented Generation (RAG) is a hybrid AI approach that combines information retrieval systems with generative AI models.",
       },
     },
     {
@@ -184,33 +172,58 @@ const articleJsonLd = {
 };
 
 export default function Home() {
+  const [contentVisible, setContentVisible] = useState(false);
+
+  useEffect(() => {
+    // Aktiviere das Scrollen explizit
+    if (typeof window !== "undefined") {
+      document.body.style.overflow = "";
+    }
+
+    // Wir zeigen den Content erst, nachdem der Loading-Screen verschwunden ist
+    setTimeout(() => {
+      setContentVisible(true);
+    }, 2200); // Leicht später als die LoadingScreen-Animation (2100ms)
+  }, []);
+
   return (
     <>
-      {/* JSON-LD Scripts */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
-      />
-      <main className="flex min-h-screen flex-col">
-        <Navbar />
-        <Hero />
-        <MarketStats />
-        <WhyChooseUs />
-        <UseCases />
-        <Process />
-        <Testimonials />
-        <FaqSection />
-        <CtaSection />
-        <Footer />
-      </main>
+      {/* Loading Screen direkt als erstes Element */}
+      <LoadingScreen />
+
+      {/* Content wird erst nach dem Loading-Screen sichtbar */}
+      <div
+        className={`transition-opacity duration-500 ease-in-out ${
+          contentVisible ? "opacity-100" : "opacity-0"
+        }`}
+        style={{ minHeight: "100vh" }}
+      >
+        {/* JSON-LD Scripts */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+        />
+        <main className="flex min-h-screen flex-col">
+          <Navbar />
+          <Hero />
+          <MarketStats />
+          <WhyChooseUs />
+          <UseCases />
+          <Process />
+          <Testimonials />
+          <FaqSection />
+          <CtaSection />
+          <Footer />
+        </main>
+      </div>
     </>
   );
 }

@@ -11,18 +11,15 @@ const jsonLd = {
   url: "https://innerstaterag.com/contact",
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+1-555-123-4567",
     contactType: "customer service",
-    email: "info@innerstaterag.com",
+    email: "imanaparviz@gmail.com",
     availableLanguage: ["English", "German", "Swedish"],
   },
   address: {
     "@type": "PostalAddress",
-    streetAddress: "123 AI Avenue",
-    addressLocality: "Tech City",
-    addressRegion: "CA",
-    postalCode: "94103",
-    addressCountry: "US",
+    addressLocality: "GRAZ",
+    postalCode: "8020",
+    addressCountry: "Austria",
   },
   mainEntityOfPage: {
     "@type": "WebPage",
@@ -242,30 +239,13 @@ export default function ContactPage() {
                         </h3>
                         <p style={{ color: "var(--text-color)" }}>
                           <a
-                            href="mailto:info@innerstaterag.com"
+                            href="mailto:imanaparviz@gmail.com"
                             style={{
                               color: "var(--secondary-color)",
                               textDecoration: "none",
                             }}
                           >
-                            info@innerstaterag.com
-                          </a>
-                        </p>
-                      </div>
-
-                      <div style={{ marginBottom: "20px" }}>
-                        <h3 style={{ fontSize: "18px", marginBottom: "8px" }}>
-                          Call Us
-                        </h3>
-                        <p style={{ color: "var(--text-color)" }}>
-                          <a
-                            href="tel:+15551234567"
-                            style={{
-                              color: "var(--secondary-color)",
-                              textDecoration: "none",
-                            }}
-                          >
-                            +1 (555) 123-4567
+                            imanaparviz@gmail.com
                           </a>
                         </p>
                       </div>
@@ -280,11 +260,9 @@ export default function ContactPage() {
                             color: "var(--text-color)",
                           }}
                         >
-                          123 AI Avenue
+                          GRAZ 8020
                           <br />
-                          Tech City, CA 94103
-                          <br />
-                          United States
+                          Austria
                         </address>
                       </div>
 
