@@ -132,13 +132,9 @@ export default async function RootLayout(props: {
   }
 
   return (
-    <html lang={locale} className={inter.className}>
-      <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
-          <Script src="/shared-scripts.js" strategy="afterInteractive" />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      {children}
+      <Script src="/shared-scripts.js" strategy="afterInteractive" />
+    </NextIntlClientProvider>
   );
 }
