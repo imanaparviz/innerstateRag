@@ -134,6 +134,14 @@ export function getBlogPostBySlug(slug: string): BlogPost | undefined {
     // Post-process the HTML to ensure proper styling
     let formattedHtml = processedContent.toString();
 
+    // Inject base64 frontmatter ogImage as <img> at the top of the content if present
+    if (matterResult.data.ogImage?.startsWith("data:image")) {
+      formattedHtml =
+        `<img src="${matterResult.data.ogImage}" alt="${
+          matterResult.data.title || ""
+        }" class="rounded-lg mb-8 mx-auto" />` + formattedHtml;
+    }
+
     // Improve headings and list rendering
     formattedHtml = formattedHtml
       // Make sure headings have proper margins and styling

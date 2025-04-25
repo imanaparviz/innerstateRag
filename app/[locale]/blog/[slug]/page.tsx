@@ -207,7 +207,7 @@ export default async function Page({
           {/* Post Content */}
           <div className="blog-content">
             <div
-              className="prose prose-lg max-w-none dark:prose-invert 
+              className="prose prose-lg max-w-none dark:prose-invert \
               prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
               prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
               prose-h2:text-2xl prose-h2:mt-6 prose-h2:mb-3
@@ -216,7 +216,7 @@ export default async function Page({
               prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
               prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
               prose-li:my-2
-              prose-img:rounded-lg 
+              prose-img:rounded-lg \
               prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 dark:hover:prose-a:text-blue-300"
               dangerouslySetInnerHTML={{ __html: post.contentHtml }}
             />
