@@ -44,7 +44,18 @@ export function getBlogPosts(): Omit<BlogPost, "contentHtml" | "content">[] {
   }
 
   const allPostsData = filenames
-    .filter((filename) => filename.endsWith(".md"))
+    // Only include actual markdown files and exclude image files
+    .filter((filename) => {
+      // Verify file has .md extension and isn't an image file mistakenly with .md
+      return (
+        filename.endsWith(".md") &&
+        !filename.endsWith(".png.md") &&
+        !filename.endsWith(".jpg.md") &&
+        !filename.endsWith(".jpeg.md") &&
+        !filename.endsWith(".gif.md") &&
+        !filename.endsWith(".svg.md")
+      );
+    })
     .map((filename) => {
       const slug = filename.replace(/\.md$/, "");
       const fullPath = path.join(postsDirectory, filename);

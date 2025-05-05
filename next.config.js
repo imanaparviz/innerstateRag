@@ -27,6 +27,9 @@ const nextConfig = {
     };
     return config;
   },
+  // Verbessere die Navigation für Links in der App
+  skipTrailingSlashRedirect: true,
+  skipMiddlewareUrlNormalize: true,
 };
 
 module.exports = withNextIntl(nextConfig);

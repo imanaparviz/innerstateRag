@@ -164,7 +164,7 @@ export function Navbar() {
               </Link>
             </li>
             <li>
-              <Link
+              <a
                 href={`/${locale}/blog`}
                 className={`text-sm font-medium transition-colors ${
                   scrolled
@@ -173,7 +173,7 @@ export function Navbar() {
                 }`}
               >
                 Blog
-              </Link>
+              </a>
             </li>
           </ul>
 
@@ -305,13 +305,13 @@ export function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link
+                <a
                   href={`/${locale}/blog`}
-                  className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
-                  onClick={toggleMenu}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex w-full items-center py-3 px-3 text-lg font-medium hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
                   Blog
-                </Link>
+                </a>
               </li>
             </ul>
             <Button
