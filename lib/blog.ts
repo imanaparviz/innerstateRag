@@ -136,10 +136,34 @@ export function getBlogPostBySlug(slug: string): BlogPost | undefined {
 
     // Inject base64 frontmatter ogImage as <img> at the top of the content if present
     if (matterResult.data.ogImage?.startsWith("data:image")) {
-      formattedHtml =
-        `<img src="${matterResult.data.ogImage}" alt="${
-          matterResult.data.title || ""
-        }" class="rounded-lg mb-8 mx-auto" />` + formattedHtml;
+      try {
+        // Get the base64 content size
+        const base64Size = matterResult.data.ogImage.length;
+
+        // If base64 string is too large (over 1MB), use a placeholder or skip
+        if (base64Size > 1000000) {
+          console.warn(
+            `Base64 image in ${slug}.md is too large (${Math.round(
+              base64Size / 1024
+            )}KB), using placeholder.`
+          );
+          formattedHtml =
+            `<div class="flex justify-center my-8">
+            <div class="bg-gray-200 dark:bg-gray-700 p-4 rounded-lg text-center">
+              <p>Image available but too large to display inline.</p>
+            </div>
+          </div>` + formattedHtml;
+        } else {
+          // Use the image if it's a reasonable size
+          formattedHtml =
+            `<img src="${matterResult.data.ogImage}" alt="${
+              matterResult.data.title || ""
+            }" class="rounded-lg mb-8 mx-auto" />` + formattedHtml;
+        }
+      } catch (imgErr) {
+        console.error(`Error processing base64 image in ${slug}.md:`, imgErr);
+        // Continue without adding the image if there's an error
+      }
     }
 
     // Improve headings and list rendering

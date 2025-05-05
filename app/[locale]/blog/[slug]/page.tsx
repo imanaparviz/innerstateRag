@@ -7,6 +7,31 @@ import { locales } from "@/i18n"; // Assuming i18n.ts exports locales
 import { format, parseISO } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { ErrorBoundary } from "react-error-boundary";
+
+// Error fallback component to display when the blog content fails to render
+function ErrorFallback({
+  error,
+  resetErrorBoundary,
+}: {
+  error: Error;
+  resetErrorBoundary: () => void;
+}) {
+  return (
+    <div className="my-8 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg text-center">
+      <h2 className="text-xl font-bold mb-2">Error loading blog content</h2>
+      <p className="mb-4">
+        There was an error displaying this blog post content.
+      </p>
+      <button
+        onClick={resetErrorBoundary}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+      >
+        Try again
+      </button>
+    </div>
+  );
+}
 
 type PageParams = {
   params: Promise<{ slug: string; locale: string }>;
@@ -206,20 +231,28 @@ export default async function Page({
 
           {/* Post Content */}
           <div className="blog-content">
-            <div
-              className="prose prose-lg max-w-none dark:prose-invert \
-              prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
-              prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
-              prose-h2:text-2xl prose-h2:mt-6 prose-h2:mb-3
-              prose-h3:text-xl prose-h3:mt-4 prose-h3:mb-2
-              prose-p:my-4 prose-p:text-gray-700 dark:prose-p:text-gray-300
-              prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
-              prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
-              prose-li:my-2
-              prose-img:rounded-lg \
-              prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 dark:hover:prose-a:text-blue-300"
-              dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-            />
+            <ErrorBoundary
+              FallbackComponent={ErrorFallback}
+              onReset={() => {
+                // Reset the error state when user clicks the "Try again" button
+                window.location.reload();
+              }}
+            >
+              <div
+                className="prose prose-lg max-w-none dark:prose-invert \
+                prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white
+                prose-h1:text-3xl prose-h1:mt-8 prose-h1:mb-4
+                prose-h2:text-2xl prose-h2:mt-6 prose-h2:mb-3
+                prose-h3:text-xl prose-h3:mt-4 prose-h3:mb-2
+                prose-p:my-4 prose-p:text-gray-700 dark:prose-p:text-gray-300
+                prose-ul:my-4 prose-ul:list-disc prose-ul:pl-6
+                prose-ol:my-4 prose-ol:list-decimal prose-ol:pl-6
+                prose-li:my-2
+                prose-img:rounded-lg \
+                prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:text-blue-800 dark:hover:prose-a:text-blue-300"
+                dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+              />
+            </ErrorBoundary>
 
             {/* Fallback to ReactMarkdown if HTML rendering doesn't work properly */}
             {false && post && (
